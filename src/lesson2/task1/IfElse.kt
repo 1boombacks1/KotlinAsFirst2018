@@ -65,16 +65,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    return when {
-        age % 100 in 5..20 -> "$age лет"
-        age % 10 == 1 -> "$age год"
-        age % 10 in 2..4 -> "$age года"
-        age % 10 > 4 -> "$age лет"
-        else -> "$age лет"
+fun ageDescription(age: Int): String =
+        when {
+            age % 100 in 5..20 -> "$age лет"
+            age % 10 == 1 -> "$age год"
+            age % 10 in 2..4 -> "$age года"
+            else -> "$age лет"
+        }
 
-    }
-}
 /**
  * Простая
  *
@@ -93,9 +91,7 @@ fun timeForHalfWay(t1: Double, v1: Double,
         sS <= s1 -> sS / v1
         (sS > s1) && (sS <= s1 + s2) -> t1 + (sS - s1) / v2
         else -> (sS - s1 - s2) / v3 + t1 + t2
-
     }
-
 }
 
 /**
@@ -110,12 +106,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    val Kingx = (kingX == rookX1 || kingY == rookY1)
-    val Kingy = (kingX == rookX2 || kingY == rookY2)
+    val kx = (kingX == rookX1 || kingY == rookY1)
+    val ky = (kingX == rookX2 || kingY == rookY2)
     return when {
-        Kingx && Kingy -> 3
-        Kingy -> 2
-        Kingx -> 1
+        kx && ky -> 3
+        ky -> 2
+        kx -> 1
         else -> 0
     }
 }
@@ -154,11 +150,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val max = maxOf(a, b, c)
     val min = minOf(a, b, c)
     val d = (a + b + c) - (max + min)
+    val sr = sqr(min) + sqr(d)
     return when {
         max > min + d -> -1
-        sqr(max) < sqr(min) + sqr(d) -> 0
-        sqr(max) == sqr(min) + sqr(d) -> 1
-        sqr(max) > sqr(min) + sqr(d) -> 2
+        sqr(max) < sr -> 0
+        sqr(max) == sr -> 1
+        sqr(max) > sr -> 2
         else -> -1
     }
 }

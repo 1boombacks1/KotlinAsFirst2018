@@ -32,16 +32,8 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    val queen1 = (x1 == x2 || y1 == y2)
-    val queen2 = abs(x1 - x2) == abs(y1 - y2)
-    return queen1 || queen2
-}
-//у меня тут 2 варианта,оба рабочие, если судить по читаемости кода и по весу,то какой лучше?
-
-//    val queen = ((x1 == x2 || y1 == y2)) || (abs(x1 - x2) == abs(y1 - y2))
-//    return queen
-
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+        ((x1 == x2 || y1 == y2)) || (abs(x1 - x2) == abs(y1 - y2))
 
 /**
  * Простая
