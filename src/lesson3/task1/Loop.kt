@@ -70,11 +70,19 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int =
-        when {
-            n < 10 -> 1
-            else -> digitNumber(n / 10) + digitNumber(n % 10)
-        }
+fun digitNumber(n: Int): Int {
+    var results = n
+    var i = 0
+
+    do {
+        results /= 10
+        i++
+    } while (results > 0)
+
+    return i
+
+}
+
 
 /**
  * Простая
@@ -86,7 +94,7 @@ fun fib(n: Int): Int {
     var fib1 = 1
     var fib2 = 1
     var fibsum = 0
-    if (n <= 2) else {
+    if (n >= 3) {
         for (i in 3..n) {
             fibsum = fib1 + fib2
             fib1 = fib2
@@ -115,10 +123,12 @@ fun lcm(m: Int, n: Int): Int = m / gcd(m, n) * n
  */
 fun minDivisor(n: Int): Int {
     var result = 1
-    for (i in 2..n) if (n % i == 0) {
-        result *= i
-        break
-    }
+
+    for (i in 2..n)
+        if (n % i == 0) {
+            result *= i
+            break
+        }
     return result
 }
 
@@ -127,14 +137,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var i = n / 2
-    while (n % i != 0) {
-        i--
-        if (i == 1) else i
-    }
-    return i
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -154,11 +157,14 @@ fun isCoPrime(m: Int, n: Int): Boolean = gcd(m, n) == 1
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var square = false
-    for (i in m..n)
-        if (sqrt(i.toDouble()) * 10 % 10 == 0.0)
-            square = true
-    return square
+
+    for (k in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
+
+        if (k * k in m..n)
+            return true
+
+    }
+    return false
 }
 
 /**
