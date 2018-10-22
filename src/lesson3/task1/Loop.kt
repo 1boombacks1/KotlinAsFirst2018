@@ -71,15 +71,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var results = n
-    var i = 0
+    var count = 0
+    var n2 = n
 
-    do {
-        results /= 10
-        i++
-    } while (results > 0)
-
-    return i
+    if (n == 0) count++
+    while (n2 != 0) {
+        count++
+        n2 /= 10
+    }
+    return count
 
 }
 
@@ -91,18 +91,16 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var fib1 = 1
+    var fib1 = 0
     var fib2 = 1
-    var fibsum = 0
-    if (n >= 3) {
-        for (i in 3..n) {
-            fibsum = fib1 + fib2
-            fib1 = fib2
-            fib2 = fibsum
-        }
-        return fibsum
+
+    for (i in 1 until n) {
+        val t = fib1
+        fib1 += fib2
+        fib2 = t
     }
-    return 1
+
+    return fib1 + fib2
 }
 
 
