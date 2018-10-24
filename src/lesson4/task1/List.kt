@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import java.io.File.separator
+import java.lang.Math.max
 import java.lang.Math.pow
 import kotlin.math.sqrt
 
@@ -275,7 +276,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
 
     for (i in 0 until digits.size) {
-        var num = digits[i] * pow(base.toDouble(), (digits.size - i - 1).toDouble()).toInt()
+        val num = digits[i] * pow(base.toDouble(), (digits.size - i - 1).toDouble()).toInt()
         result += num
     }
     return result
@@ -306,7 +307,27 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var num = n
+    val result = mutableListOf<String>()
+    val symbols = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val numbers = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+
+    while (num > 0) {
+        var maxFound = 0
+        for (i in 0 until numbers.size) {
+
+            if (num >= numbers[i]) {
+                maxFound = i
+            }
+        }
+
+        result.add(symbols[maxFound])
+        num -= numbers[maxFound]
+
+    }
+    return result.joinToString(separator = "")
+}
 
 /**
  * Очень сложная
