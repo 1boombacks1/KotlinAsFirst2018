@@ -310,25 +310,23 @@ fun decimalFromString(str: String, base: Int): Int {
 fun roman(n: Int): String {
     var num = n
     val result = mutableListOf<String>()
-    val symbols = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
-    val numbers = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    val (a, b) =
+            Pair(listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"),
+                    listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000))
 
     while (num > 0) {
-        var maxFound = 0
-        for (i in 0 until numbers.size) {
+        for (i in 0 until b.size) {
 
-            if (num >= numbers[i]) {
-                maxFound = i
+            if (num >= b[i]) {
+
+
+                result.add(a[i])
+                num -= b[i]
             }
         }
-
-        result.add(symbols[maxFound])
-        num -= numbers[maxFound]
-
     }
     return result.joinToString(separator = "")
 }
-
 /**
  * Очень сложная
  *

@@ -15,7 +15,7 @@ import kotlin.math.*
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result + i // Please do not fix in master
+        result = result * i // Please do not fix in master
     }
     return result
 }
@@ -72,15 +72,13 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var count = 0
-    var n2 = n
+    var number = n
 
-    if (n == 0) count++
-    while (n2 != 0) {
+    do {
+        number /= 10
         count++
-        n2 /= 10
-    }
+    } while (number != 0)
     return count
-
 }
 
 
@@ -120,14 +118,10 @@ fun lcm(m: Int, n: Int): Int = m / gcd(m, n) * n
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var result = 1
-
-    for (i in 2..n)
-        if (n % i == 0) {
-            result *= i
-            break
-        }
-    return result
+    for (i in 2..n / 2)
+        if (n % i == 0)
+            return i
+    return n
 }
 
 /**
@@ -157,10 +151,8 @@ fun isCoPrime(m: Int, n: Int): Boolean = gcd(m, n) == 1
 fun squareBetweenExists(m: Int, n: Int): Boolean {
 
     for (k in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
-
         if (k * k in m..n)
             return true
-
     }
     return false
 }
@@ -240,7 +232,7 @@ fun cos(x: Double, eps: Double): Double {
 
         result += member
         i += 2
-}
+    }
 return result
 }
 

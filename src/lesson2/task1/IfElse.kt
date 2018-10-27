@@ -150,13 +150,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val max = maxOf(a, b, c)
     val min = minOf(a, b, c)
     val d = (a + b + c) - (max + min)
-    val sr = sqr(min) + sqr(d)
+    val sqr = sqr(min) + sqr(d)
     return when {
         max > min + d -> -1
-        sqr(max) < sr -> 0
-        sqr(max) == sr -> 1
-        sqr(max) > sr -> 2
-        else -> -1
+        sqr(max) < sqr -> 0
+        sqr(max) == sqr -> 1
+        else -> 2
     }
 }
 
