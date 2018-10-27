@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import java.io.File.separator
 import java.lang.Math.max
 import java.lang.Math.pow
@@ -315,15 +316,18 @@ fun roman(n: Int): String {
                     listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000))
 
     while (num > 0) {
-        for (i in 0 until b.size) {
+
+        var maxFound = 0
+        for (i in 0 until b.size) { // Я не понимаю , как сделать этот перебор еще эффективнее
 
             if (num >= b[i]) {
-
-
-                result.add(a[i])
-                num -= b[i]
+                maxFound = i
             }
         }
+
+        result.add(a[maxFound])
+        num -= b[maxFound]
+
     }
     return result.joinToString(separator = "")
 }
