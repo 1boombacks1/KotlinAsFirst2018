@@ -7,6 +7,7 @@ import lesson1.task1.sqr
 import java.io.File.separator
 import java.lang.Math.max
 import java.lang.Math.pow
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -171,14 +172,12 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var result = 0.0
-    var sx = 1.0
 
-    p.forEach {
-        result += it * sx
-        sx *= x
-    }
+    for (i in 0 until p.size) result += p[i] * pow(x, i.toDouble())
     return result
+
 }
+
 
 
 /**
