@@ -170,13 +170,8 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0.0 при любом x.
  */
-fun polynom(p: List<Double>, x: Double): Double {
-    var result = 0.0
+fun polynom(p: List<Double>, x: Double): Double = p.foldIndexed(0.0) { i, acc, e -> acc + e * pow(x, i.toDouble()) }
 
-    for (i in 0 until p.size) result += p[i] * pow(x, i.toDouble())
-    return result
-
-}
 
 
 
@@ -310,22 +305,29 @@ fun decimalFromString(str: String, base: Int): Int {
 fun roman(n: Int): String {
     var num = n
     val result = mutableListOf<String>()
-    val (a, b) =
-            Pair(listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"),
-                    listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000))
+    val rom = sortedMapOf(
+            1 to "I",
+            4 to "IV",
+            5 to "V",
+            9 to "IX",
+            10 to "X",
+            40 to "XL",
+            50 to "L",
+            90 to "XC",
+            100 to "C",
+            400 to "CD",
+            500 to "D",
+            900 to "CM",
+            1000 to "M"
+    )
 
     while (num > 0) {
 
-        var maxFound = 0
-        for (i in 0 until b.size) { // Я не понимаю , как сделать этот перебор еще эффективнее
-
-            if (num >= b[i]) {
-                maxFound = i
-            }
-        }
-
-        result.add(a[maxFound])
-        num -= b[maxFound]
+        val key = rom.keys.last()
+        if (num >= key) {
+            result.add(rom[key]!!)
+            num -= key
+        } else rom.remove(key)
 
     }
     return result.joinToString(separator = "")
