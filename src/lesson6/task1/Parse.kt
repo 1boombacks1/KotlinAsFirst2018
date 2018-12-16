@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+import java.lang.Exception
+
 /**
  * Пример
  *
@@ -71,7 +74,23 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+val months = listOf("января", "февраля", "марта", "апреля", "май", "июня",
+        "июля", "августа", "сентября", "ноября", "декабря")
+
+
+fun dateStrToDigit(str: String): String {
+    try {
+        val divisor = str.split(" ")
+        val day = divisor.first().toInt()
+        val month = months.indexOf(divisor[1]) + 1
+        val year = divisor.last().toInt()
+
+        if (day > daysInMonth(month, year) || month == 0) return ""
+        return String.format("%02d.%02d.%02d", day, month, year)
+    } catch (e: Exception) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -83,7 +102,22 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    try {
+        val divisor = digital.split(".")
+        if (divisor.size != 3) return ""
+        val day = divisor.first().toInt()
+        val justMonth = divisor[1].toInt()
+        val month = months[justMonth - 1]
+//        val month = months[divisor[1].toInt() - 1].toInt()
+        val year = divisor.last().toInt()
+
+        if (day > daysInMonth(justMonth, year)) return ""
+        return String.format("%s %s %s", day, month, year)
+    } catch (e: Exception) {
+        return ""
+    }
+}
 
 /**
  * Средняя
