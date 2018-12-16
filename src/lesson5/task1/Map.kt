@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import lesson4.task1.mean
+
 /**
  * Пример
  *
@@ -147,16 +149,13 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.all 
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun average(list: MutableList<Double>): Double = list.map { it / list.size }.sum()
 
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
     val averagePrice: MutableMap<String, MutableList<Double>> = mutableMapOf()
 
     stockPrices.forEach { averagePrice.getOrPut(it.first) { mutableListOf() }.add(it.second) }
 
-    val result: MutableMap<String, Double> = mutableMapOf()
-
-    for ((first, second) in averagePrice) result[first] = average(second)
+    val result = averagePrice.mapValues { it.value.average() }
 
     return result
 }
@@ -176,15 +175,8 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    val basket = mutableListOf<Double>()
-    stuff.map { if (it.value.first == kind) basket.add(it.value.second) }
-
-    val min = basket.min()
-    stuff.filter { it.value.first == kind && it.value.second == min }.map { return it.key }
-
-    return null
-}
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? =
+        stuff.filter { it.value.first == kind }.minBy { it.value.second }?.key
 
 /**
  * Сложная
@@ -227,7 +219,9 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
-    for ((key, value) in b) if (a[key] == value) a.remove(key)
+    for ((key, value) in b) {
+        if (a[key] == value) a.remove(key)
+    }
 }
 
 
@@ -236,7 +230,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
  *
  * Для двух списков людей найти людей, встречающихся в обоих списках
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().intersect(b.toSet()).toList()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.intersect(b).toList()
 
 /**
  * Средняя
@@ -275,7 +269,8 @@ fun extractRepeats(list: List<String>): Map<String, Int> =
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean =
+        words.groupingBy { it.toList().sorted() }.eachCount().any { it.value >= 2 }
 
 /**
  * Сложная
@@ -294,7 +289,19 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val myMap = mutableMapOf<Int, Int>()
+
+    for ((i, el) in list.withIndex()) {
+
+        val mem = number - el
+        val soap = myMap[mem]
+
+        if (soap == null) myMap[el] = i
+        else return soap to i
+    }
+    return Pair(-1, -1)
+}
 
 /**
  * Очень сложная
