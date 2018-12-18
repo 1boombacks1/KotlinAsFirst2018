@@ -4,6 +4,7 @@ package lesson6.task1
 
 import lesson2.task2.daysInMonth
 import java.lang.Exception
+import java.lang.NumberFormatException
 
 /**
  * Пример
@@ -87,7 +88,7 @@ fun dateStrToDigit(str: String): String {
 
         if (day > daysInMonth(month, year) || month == 0) return ""
         return String.format("%02d.%02d.%02d", day, month, year)
-    } catch (e: Exception) {
+    } catch (e: NumberFormatException) {
         return ""
     }
 }
@@ -109,12 +110,11 @@ fun dateDigitToStr(digital: String): String {
         val day = divisor.first().toInt()
         val justMonth = divisor[1].toInt()
         val month = months[justMonth - 1]
-//        val month = months[divisor[1].toInt() - 1].toInt()
         val year = divisor.last().toInt()
 
         if (day > daysInMonth(justMonth, year)) return ""
         return String.format("%s %s %s", day, month, year)
-    } catch (e: Exception) {
+    } catch (e: NumberFormatException) {
         return ""
     }
 }
@@ -131,7 +131,10 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String = if (
+        Regex("""([\-]|\s|\d|\+|\(|\))+""").matches(phone))
+    Regex("""[^\d+]""").replace(phone, "") else ""
+
 
 /**
  * Средняя
@@ -143,7 +146,23 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val parts = jumps.split(Regex("""\s"""))
+    val numList = mutableListOf<String>()
+
+    try {
+        for (part in parts) {
+            if (!part.contains(Regex("""[0-9]|[-%]""")))
+                return -1
+            if (part.toIntOrNull() != null)
+                numList.add(part)
+        }
+        return numList.max()!!.toInt()
+    } catch (e: KotlinNullPointerException) {
+        return -1
+    }
+}
+
 
 /**
  * Сложная

@@ -139,17 +139,17 @@ class Tests {
                 mapOf<Int, List<String>>(),
                 buildGrades(mapOf())
         )
-//        assertEquals(
-//                mapOf(4 to listOf("Ярослав", "Маша", "Жека"), 2 to listOf("Гриша")),
-//                buildGrades(mapOf("Ярослав" to 4, "Гриша" to 2, "Маша" to 4, "Жека" to 4))
-//        )
+        assertEquals(
+                mapOf(4 to listOf("Ярослав", "Маша", "Жека"), 2 to listOf("Гриша")),
+                buildGrades(mapOf("Ярослав" to 4, "Гриша" to 2, "Маша" to 4, "Жека" to 4))
+        )
         assertEquals(
                 mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат")),
                 buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
         )
         assertEquals(
                 mapOf(3 to listOf("Семён", "Михаил", "Марат")),
-                buildGrades(mapOf("Марат" to 3, "Семён" to 3, "Михаил" to 3))
+                buildGrades(mapOf("Семён" to 3, "Михаил" to 3, "Марат" to 3))
         )
     }
 

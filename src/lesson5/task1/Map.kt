@@ -123,7 +123,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
 
     grades.forEach { resMutMap.getOrPut(it.value, ::mutableListOf).add(it.key) }
 
-    for ((key, value) in resMutMap) resMap[key] = value.toList().sortedDescending()
+    for ((key, value) in resMutMap) resMap[key] = value.toList()
     return resMap
 }
 
