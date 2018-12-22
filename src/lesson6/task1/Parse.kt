@@ -76,12 +76,14 @@ fun main(args: Array<String>) {
  * входными данными.
  */
 val months = listOf("января", "февраля", "марта", "апреля", "май", "июня",
-        "июля", "августа", "сентября", "ноября", "декабря")
+        "июля", "августа", "сентября", "октября", "ноября", "декабря")
 
 
 fun dateStrToDigit(str: String): String {
     try {
         val divisor = str.split(" ")
+        val error = Regex("""((\d+)\s([а-я]+)\s(\d+))""")
+        if (!str.matches(error)) return ""
         val day = divisor.first().toInt()
         val month = months.indexOf(divisor[1]) + 1
         val year = divisor.last().toInt()
@@ -109,6 +111,7 @@ fun dateDigitToStr(digital: String): String {
         if (divisor.size != 3) return ""
         val day = divisor.first().toInt()
         val justMonth = divisor[1].toInt()
+        if (justMonth <= 0) return ""
         val month = months[justMonth - 1]
         val year = divisor.last().toInt()
 
@@ -132,7 +135,7 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String = if (
-        Regex("""([\-]|\s|\d|\+|\(|\))+""").matches(phone))
+        Regex("""((\+*\d+)|\s|(\(\d+\))|-)+""").matches(phone))
     Regex("""[^\d+]""").replace(phone, "") else ""
 
 
