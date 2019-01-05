@@ -153,18 +153,27 @@ fun bestLongJump(jumps: String): Int {
     val parts = jumps.split(Regex("""\s"""))
     val numList = mutableListOf<String>()
 
-    try {
-        for (part in parts) {
-            if (!part.contains(Regex("""[0-9]|[-%]""")))
-                return -1
-            if (part.toIntOrNull() != null)
-                numList.add(part)
-        }
-        return numList.max()!!.toInt()
-    } catch (e: KotlinNullPointerException) {
-        return -1
+    for (part in parts) {
+        if (!part.contains(Regex("""[0-9]|[-%]""")))
+            return -1
+        if (part.toIntOrNull() != null)
+            numList.add(part)
     }
+    return if (numList.isEmpty()) -1
+    else numList.max()!!.toInt()
 }
+//try {
+//    for (part in parts) {
+//        if (!part.contains(Regex("""[0-9]|[-%]""")))
+//            return -1
+//        if (part.toIntOrNull() != null)
+//            numList.add(part)
+//    }
+//    return numList.max()!!.toInt()
+//} catch (e: KotlinNullPointerException) {
+//    return -1
+//}
+//}
 
 
 /**
@@ -177,7 +186,20 @@ fun bestLongJump(jumps: String): Int {
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val ptrn = Regex("""(\d+\s[\-%])+|\+|\s""")
+    val parts = jumps.split(ptrn)
+    val numList = mutableListOf<Int>()
+
+    for (part in parts) {
+
+        if (part.toIntOrNull() != null)
+            numList.add(part.toInt())
+        else continue
+    }
+    return if (numList.isEmpty()) -1
+    else numList.max()!!
+}
 
 /**
  * Сложная
