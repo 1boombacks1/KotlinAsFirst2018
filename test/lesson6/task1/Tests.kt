@@ -72,6 +72,7 @@ class Tests {
         assertEquals(-1, bestLongJump("% - - % -"))
         assertEquals(754, bestLongJump("700 717 707 % 754"))
         assertEquals(-1, bestLongJump("700 + 700"))
+        assertEquals(2147483647, bestLongJump("% 0 560095899 -  2147483647"))
 
     }
 
@@ -81,6 +82,7 @@ class Tests {
         assertEquals(226, bestHighJump("226 +"))
         assertEquals(-1, bestHighJump("???"))
         assertEquals(230, bestHighJump("220 + 224 %+ 228 %- 230 + 232 %%- 234 %"))
+        assertEquals(976946019, bestHighJump("1 %- 0 %%- 147483648 %%- 853640821 %- 0 %%- 843054871 + 147483647 %- 57138385 %- 1 %+ 147483647 %%- 1 + 976946019 %+ 139005872 %%- 244472045 + 147483647 %%- 1 %%- 1 %%- 1 %+ 355116092 %+"))
     }
 
     @Test

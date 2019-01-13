@@ -111,7 +111,7 @@ fun dateDigitToStr(digital: String): String {
         if (divisor.size != 3) return ""
         val day = divisor.first().toInt()
         val justMonth = divisor[1].toInt()
-        if (justMonth <= 0) return ""
+        if (justMonth <= 0 || justMonth > 12) return ""
         val month = months[justMonth - 1]
         val year = divisor.last().toInt()
 
@@ -150,18 +150,17 @@ fun flattenPhoneNumber(phone: String): String = if (
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    val parts = jumps.split(Regex("""\s"""))
-    val numList = mutableListOf<String>()
+    val parts = jumps.split(Regex("""\s+"""))
+    val numList = mutableListOf<Int>()
 
     for (part in parts) {
-        if (!part.contains(Regex("""[0-9]|[-%]|\s""")))
+        if (!part.contains(Regex("""[0-9]|[-%]""")))
             return -1
         if (part.toIntOrNull() != null)
-            numList.add(part)
-        else continue
+            numList.add(part.toInt())
     }
     return if (numList.isEmpty()) -1
-    else numList.max()!!.toInt()
+    else numList.max()!!
 }
 
 
@@ -176,15 +175,14 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val ptrn = Regex("""(\d+\s[\-%])+|\+|\s""")
+    val ptrn = Regex("""(\d+\s%+(?![+]))|[+\s-%]""")
     val parts = jumps.split(ptrn)
     val numList = mutableListOf<Int>()
 
     for (part in parts) {
 
-        if (part.toIntOrNull() != null)
+        if (part.trim().toIntOrNull() != null)
             numList.add(part.toInt())
-        else continue
     }
     return if (numList.isEmpty()) -1
     else numList.max()!!
